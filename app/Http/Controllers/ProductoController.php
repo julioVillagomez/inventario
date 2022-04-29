@@ -152,4 +152,21 @@ class ProductoController extends Controller
         return response()->success('Calificacion gurdada correctamente');
 
     }
+
+
+    /**
+     * change stock 
+     *
+     * @param Producto $producto
+     * @return void
+     */
+    public function stock(Producto $producto){
+       
+
+        $producto->estado = $producto->estado =='con inventario' ? 'sin inventario' : 'con inventario';
+        $producto->save();
+
+        return response()->success('Stock gurdada correctamente');
+
+    }
 }

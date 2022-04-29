@@ -60,9 +60,8 @@
                     </div>
 
                     <div class="row mb-2">
-                        <div class="col-12  d-grid">
-                            <button class="btn btn-warning">Editar</button>
-                        </div>
+                        <stock-component v-bind:producto="item.id" v-bind:stock="item.estado" v-on:update="updateLists" ></stock-component>
+
                     </div>
         
         
