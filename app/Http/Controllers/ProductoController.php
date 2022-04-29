@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductoRequest;
 use App\Http\Resources\ProductoResource;
+use App\Models\Categoria;
 use App\Models\Producto;
+use Faker\Core\Uuid;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage as FacadesStorage;
+use Storage;
+use DB;
 class ProductoController extends Controller
 {
     /**
@@ -17,7 +21,8 @@ class ProductoController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            return ProductoResource::collection(Producto::all())->additional(['error' => false]);
+
+            return ProductoResource::collection(Producto::all()->load('categorias'))->additional(['error' => false]);
         }
 
 
@@ -45,7 +50,27 @@ class ProductoController extends Controller
      */
     public function store(ProductoRequest $request)
     {
-        Producto::create($request->all());
+
+        try {
+            DB::beginTransaction();
+                $uploadedFile = $request->file('image');
+                $filename = \Str::uuid().$uploadedFile->getClientOriginalName();
+                $path = Storage::disk('local')->put($filename,$uploadedFile);
+
+                $data = $request->all();
+
+                $data['path'] = $path;
+                $data['url'] = Storage::disk('local')->url($path);
+                $categorias = explode(',',$request->categorias);
+                
+                $producto = Producto::create($data);
+                $producto->categorias()->sync($categorias);
+                DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->error($th->getMessage());
+        }
+        
         return response()->success('Se guardo correctamente el producto');
     }
 
@@ -57,6 +82,7 @@ class ProductoController extends Controller
      */
     public function show(Producto $producto)
     {
+        $producto->load('categorias');
         return ProductoResource::make($producto)->additional(['error' => false]);
     }
 
@@ -89,5 +115,15 @@ class ProductoController extends Controller
 
         return response()->success('Se elimino correctamente el producto');
 
+    }
+
+    
+    /**
+     * lists all categorias
+     *
+     * @return void
+     */
+    public function categorias(){
+        return Categoria::all();
     }
 }

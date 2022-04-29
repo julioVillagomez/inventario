@@ -24,6 +24,7 @@ class ProductoFactory extends Factory
             'sku' => $this->faker->text(10),
             'cantidad' => $this->faker->randomDigit(),
             'precio' => $this->faker->randomFloat(2,1000,10000),
+            'url' => $this->faker->imageUrl()
 
         ];
     }

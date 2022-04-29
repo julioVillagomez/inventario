@@ -5,9 +5,11 @@
  */
 
 require('./bootstrap');
-require('vue-notification');
+import Notifications from 'vue-notification'
 
 window.Vue = require('vue').default;
+
+window.Vue.use(Notifications)
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,8 +22,9 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('list-component', require('./components/ListProductoComponent.vue').default);
 Vue.component('form-component', require('./components/FormProductoComponent.vue').default);
+Vue.component('star-component', require('./components/StarComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -29,7 +29,22 @@
                             <option value="sin inventario">NO</option>
                         </select>
                     </div>
-        
+
+                    <div class="mb-3">
+                        <label for="i" class="form-label">Categorias</label>
+                        
+                        <select class="form-select" multiple v-model="form.categorias" aria-label="multiple select example">
+                            <option v-for="item in categorias" :key="item.id" :value="item.id" >{{item.nombre}}</option>
+                        </select>
+                    </div>
+
+                     <div class="mb-3">
+                        <label for="i" class="form-label">Imagen</label>
+                        <input class="form-control" type="file" id="image" @change="uploadFile" ref="file">
+
+                    </div>
+
+
                     <div class="mb-3">
                         <label for="descripcion" class="form-label">Descripcion</label>
                         <textarea class="form-control" id="descripcion" v-model="form.descripcion" rows="3"></textarea>
@@ -63,22 +78,41 @@
                     cantidad: 1,
                     precio : 0,
                     descripcion: '',
-                    estado:'con inventario'
+                    estado:'con inventario',
+                    images:null,
+                    categorias: []
                 },
+                categorias: [],
                 errors:[]
             }
         },
         mounted() {
-            
+            axios.get('/productos/categorias').then((response) => {
+                this.categorias = response.data
+            });
         },
         methods: {
+            uploadFile() {
+                this.form.images = this.$refs.file.files[0];
+            },
             newProduct() {
 
-                const params = this.form
+                const params = new FormData();
 
-                axios.post('/productos',params)
+                params.append('image',this.form.images);
+                params.append('nombre',this.form.nombre);
+                params.append('sku',this.form.sku);
+                params.append('cantidad',this.form.cantidad);
+                params.append('precio',this.form.precio);
+                params.append('descripcion',this.form.descripcion);
+                params.append('estado',this.form.estado);
+                params.append('categorias',this.form.categorias);
+
+                const headers = { 'Content-Type': 'multipart/form-data' };
+
+
+                axios.post('/productos',params,headers)
                 .then((response) =>{
-                    alert('guardado correctamente')
 
                     this.form = {
                         nombre: '',
@@ -86,10 +120,14 @@
                         cantidad: 1,
                         precio : 0,
                         descripcion: '',
-                        estado:'con inventario'
+                        estado:'con inventario',
+                        images:null,
+                        categorias: []
                     }
 
                     this.errors = [];
+
+                    window.location.href = '/';
                 })
                 .catch((error) => {
                     this.errors = error.response.data.errors

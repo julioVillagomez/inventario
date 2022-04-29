@@ -14,6 +14,22 @@ class ProductoResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $estado = $this->estado == "con inventario" ? 'Con stock' : 'Sin stock'; 
+
+        $categorias = collect($this->categorias)->implode('nombre',', ');
+
+        return [
+            'id' => $this->id,
+            'nombre' => $this->nombre,
+            'sku' => $this->sku,
+            'descripcion' => $this->descripcion,
+            'cantidad' => $this->cantidad,
+            'precio' => $this->precio,
+            'path' => $this->path,
+            'url' => $this->url,
+            'estado' => $estado,
+            'categorias' => $categorias,
+        ];
     }
 }
+

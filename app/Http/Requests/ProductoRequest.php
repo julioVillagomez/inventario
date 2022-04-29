@@ -31,6 +31,8 @@ class ProductoRequest extends FormRequest
             'cantidad' => 'required|integer',
             'precio' => 'required',
             'estado' => Rule::in(['con inventario','sin inventario']),
+            'image' => 'required|file',
+            'categorias' => 'required'
         ];
     }
 }
