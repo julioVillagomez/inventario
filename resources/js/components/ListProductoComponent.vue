@@ -32,7 +32,7 @@
 
                             <div class="row mb-2">
                                 <div class="col-12">
-                                    <star-component></star-component>
+                                    <star-component v-bind:calificacion="item.calificacion" ></star-component>
                                 </div>
                             </div>
                         </div>
@@ -68,9 +68,7 @@
         
         
                     <div class="row mb-2">
-                        <div class="col-12  d-grid gap-2">
-                            <button class="btn btn-primary">Calificar</button>
-                        </div>
+                        <calification-component v-bind:producto="item.id" v-on:update="updateLists" ></calification-component>
                     </div>
         
                 </div>
@@ -80,7 +78,7 @@
 </template>
 
 <script>
-import StarComponent from './StarComponent.vue';
+
     export default {
         data() {
          return {
@@ -91,6 +89,13 @@ import StarComponent from './StarComponent.vue';
             axios.get('/productos').then((response) =>{
                 this.lists = response.data.data;
             })
+        },
+        methods:{
+            updateLists(){
+                axios.get('/productos').then((response) =>{
+                    this.lists = response.data.data;
+                })
+            }
         }
     }
 </script>

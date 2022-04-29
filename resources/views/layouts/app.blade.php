@@ -399,6 +399,9 @@
         .checked {
             color: orange;
         }
+        .hover:hover {
+            color: orange;
+        }
 
     </style>
 

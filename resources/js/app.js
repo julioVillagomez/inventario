@@ -26,6 +26,7 @@ Vue.component('list-component', require('./components/ListProductoComponent.vue'
 Vue.component('form-component', require('./components/FormProductoComponent.vue').default);
 Vue.component('star-component', require('./components/StarComponent.vue').default);
 Vue.component('detail-component', require('./components/DetailProductoComponent.vue').default);
+Vue.component('calification-component', require('./components/CalificationProductoComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

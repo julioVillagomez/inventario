@@ -17,6 +17,7 @@ class ProductoResource extends JsonResource
         $estado = $this->estado == "con inventario" ? 'Con stock' : 'Sin stock'; 
 
         $categorias = collect($this->categorias)->implode('nombre',', ');
+        $calificacion = collect($this->calificaciones)->avg('calificacion');;
 
         return [
             'id' => $this->id,
@@ -29,6 +30,7 @@ class ProductoResource extends JsonResource
             'url' => $this->url,
             'estado' => $estado,
             'categorias' => $categorias,
+            'calificacion' => round($calificacion)
         ];
     }
 }

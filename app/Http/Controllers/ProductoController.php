@@ -22,7 +22,7 @@ class ProductoController extends Controller
     {
         if(request()->ajax()){
 
-            return ProductoResource::collection(Producto::orderBy('id','desc')->get()->load('categorias'))->additional(['error' => false]);
+            return ProductoResource::collection(Producto::orderBy('id','desc')->get()->load('categorias','calificaciones'))->additional(['error' => false]);
         }
 
 
@@ -84,7 +84,7 @@ class ProductoController extends Controller
     {
 
         if(request()->ajax()){
-            $producto->load('categorias');
+            $producto->load('categorias','calificaciones');
             return ProductoResource::make($producto)->additional(['error' => false]);
         }
         
@@ -130,5 +130,26 @@ class ProductoController extends Controller
      */
     public function categorias(){
         return Categoria::all();
+    }
+
+
+    /**
+     * save calificacion
+     *
+     * @param Producto $producto
+     * @param Request $request
+     * @return void
+     */
+    public function calificacion(Producto $producto,Request $request){
+        $request->validate([
+            'calification' => 'required'
+        ]);
+
+        $producto->calificaciones()->create([
+            'calificacion' => $request->calification
+        ]);
+
+        return response()->success('Calificacion gurdada correctamente');
+
     }
 }

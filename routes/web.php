@@ -18,4 +18,6 @@ Route::redirect('/', 'productos');
 
 
 Route::get('productos/categorias',[ProductoController::class,'categorias']);
+Route::post('/productos/calification/{producto}',[ProductoController::class,'calificacion']);
+
 Route::resource('productos',ProductoController::class);
