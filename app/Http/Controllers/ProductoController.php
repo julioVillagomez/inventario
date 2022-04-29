@@ -22,7 +22,7 @@ class ProductoController extends Controller
     {
         if(request()->ajax()){
 
-            return ProductoResource::collection(Producto::all()->load('categorias'))->additional(['error' => false]);
+            return ProductoResource::collection(Producto::orderBy('id','desc')->get()->load('categorias'))->additional(['error' => false]);
         }
 
 
@@ -54,13 +54,13 @@ class ProductoController extends Controller
         try {
             DB::beginTransaction();
                 $uploadedFile = $request->file('image');
-                $filename = \Str::uuid().$uploadedFile->getClientOriginalName();
-                $path = Storage::disk('local')->put($filename,$uploadedFile);
+                $filename = $uploadedFile->getClientOriginalName();
+                $path = Storage::disk('public')->put('images',$uploadedFile);
 
                 $data = $request->all();
 
                 $data['path'] = $path;
-                $data['url'] = Storage::disk('local')->url($path);
+                $data['url'] = Storage::disk('public')->url($path);
                 $categorias = explode(',',$request->categorias);
                 
                 $producto = Producto::create($data);
@@ -82,8 +82,13 @@ class ProductoController extends Controller
      */
     public function show(Producto $producto)
     {
-        $producto->load('categorias');
-        return ProductoResource::make($producto)->additional(['error' => false]);
+
+        if(request()->ajax()){
+            $producto->load('categorias');
+            return ProductoResource::make($producto)->additional(['error' => false]);
+        }
+        
+        return view('productos.detail');
     }
 
 

@@ -396,6 +396,10 @@
             }
         }
 
+        .checked {
+            color: orange;
+        }
+
     </style>
 
     <style>
@@ -423,7 +427,7 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                        
                         <li class="nav-item">
-                            <a class="nav-link" href="/productos/create">Formulario</a>
+                            <a class="nav-link" href="/">Home</a>
                         </li>
                     </ul>
                     

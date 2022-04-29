@@ -10,8 +10,11 @@
                         </div>
                         <div class="col-8">
                             <div class="row mb-2">
+                                
                                 <div class="col-12">
-                                    <label for="" class="font-monospace">{{item.nombre}}</label>
+                                    <a v-bind:href="'/productos/'+item.id" class="text-decoration-underline">
+                                        {{item.nombre}}
+                                    </a>
                                 </div>
                             </div>
 
