@@ -24,6 +24,17 @@ class ProductoController extends Controller
         return view('productos.index');
     }
 
+
+    /**
+     * show view form.
+     *
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function create(){
+        return view('productos.create');
+    }
+
     
 
     /**

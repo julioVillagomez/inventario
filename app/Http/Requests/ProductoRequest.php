@@ -28,7 +28,6 @@ class ProductoRequest extends FormRequest
             'nombre' => 'required|min:4',
             'descripcion' => 'required|min:4',
             'sku' => 'required|min:4',
-            'categoria_id' => 'required|integer',
             'cantidad' => 'required|integer',
             'precio' => 'required',
             'estado' => Rule::in(['con inventario','sin inventario']),

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', 'productos');
+Route::redirect('/', 'productos/create');
 
 
 Route::resource('productos',ProductoController::class);

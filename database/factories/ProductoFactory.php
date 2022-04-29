@@ -24,12 +24,15 @@ class ProductoFactory extends Factory
             'sku' => $this->faker->text(10),
             'cantidad' => $this->faker->randomDigit(),
             'precio' => $this->faker->randomFloat(2,1000,10000),
-            'categoria_id' => 1,
 
         ];
     }
 
-
+    /**
+     * asignation categorias producto
+     *
+     * @return void
+     */
     public function categorias(){
         return $this->afterCreating(function(Producto $producto){
             $categorias = Categoria::inRandomOrder()->take(3)->get()->pluck('id')->toArray();
