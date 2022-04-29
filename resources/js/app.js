@@ -28,6 +28,7 @@ Vue.component('star-component', require('./components/StarComponent.vue').defaul
 Vue.component('detail-component', require('./components/DetailProductoComponent.vue').default);
 Vue.component('calification-component', require('./components/CalificationProductoComponent.vue').default);
 Vue.component('stock-component', require('./components/StockProductoComponent.vue').default);
+Vue.component('delete-component', require('./components/DeleteProductoComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

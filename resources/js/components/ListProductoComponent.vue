@@ -54,9 +54,8 @@
                     </div>
         
                     <div class="row mb-2">
-                        <div class="col-12  d-grid">
-                            <button class="btn btn-light">Eliminar</button>
-                        </div>
+                        <delete-component v-bind:producto="item.id"  v-on:update="updateLists" ></delete-component>
+                        
                     </div>
 
                     <div class="row mb-2">
